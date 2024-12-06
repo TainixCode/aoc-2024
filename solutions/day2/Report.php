@@ -17,17 +17,44 @@ class Report
     {
         $this->data = array_map('intval', explode(' ', $data));
     }
-    
-    public function isSafe(): bool
+
+    public function testEasy(): bool
     {
-        $start = $this->data[0];
+        return $this->isSafe($this->data);
+    }
 
-        $direction = ($this->data[1] > $start) ? self::DIRECTION_UP : self::DIRECTION_DOWN;
+    public function testDampener(): bool
+    {
+        if ($this->testEasy()) {
+            return true;
+        }
 
-        $nbLevels = count($this->data);
+        $count = count($this->data);
+
+        for ($i = 0; $i < $count; $i++) {
+            
+            $data = $this->data;
+            unset($data[$i]);
+            $data = array_values($data); // Pour remettre les index correctement
+
+            if ($this->isSafe($data)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private function isSafe(array $data): bool
+    {
+        $start = $data[0];
+
+        $direction = ($data[1] > $start) ? self::DIRECTION_UP : self::DIRECTION_DOWN;
+
+        $nbLevels = count($data);
 
         for ($i = 0; $i < $nbLevels - 1; $i++) {
-            if (! $this->control($this->data[$i], $this->data[$i + 1], $direction)) {
+            if (! $this->control($data[$i], $data[$i + 1], $direction)) {
                 return false;
             }
         }

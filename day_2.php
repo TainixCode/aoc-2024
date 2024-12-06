@@ -11,7 +11,7 @@ $safes = 0;
 
 foreach ($data as $values) {
     $report = new Report($values);
-    $safes += (int) $report->isSafe();
+    $safes += (int) $report->testDampener();
 }
 
 echo $safes;
