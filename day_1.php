@@ -18,9 +18,11 @@ foreach ($data as $values) {
 sort($listLeft);
 sort($listRight);
 
+$similarities = array_count_values($listRight);
+
 $sum = 0;
 foreach ($listLeft as $key => $value) {
-    $sum += abs($value - $listRight[$key]);
+    $sum += $value * ($similarities[$value] ?? 0);
 }
 
 echo $sum;
