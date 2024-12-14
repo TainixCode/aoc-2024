@@ -22,6 +22,7 @@ class Calculator
         foreach ($values as $value) {
             $result[] = $value + $newValue;
             $result[] = $value * $newValue;
+            $result[] = (int) "$value$newValue";
         }
 
         return $result;
