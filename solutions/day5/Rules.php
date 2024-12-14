@@ -41,4 +41,9 @@ class Rules
         // Sinon pas de règle donc true
         return true;
     }
+
+    public function checkPositionsForUsort(int $a, int $b): int
+    {
+        return $this->checkPositions($a, $b) ? -1 : 1;
+    }
 }
