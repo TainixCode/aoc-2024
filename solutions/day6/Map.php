@@ -34,6 +34,8 @@ class Map
 
     public function move()
     {
+        $block = 0;
+
         while (true) {
 
             // On prépare le futur point
@@ -89,6 +91,11 @@ class Map
             $this->guardianX = $nextX;
             $this->guardianY = $nextY;
             $point->visit();
+
+            $block++;
+            if ($block >= 10000) {
+                throw new \Exception('Il tourne en rond');
+            }
         }
     }
 
@@ -103,5 +110,26 @@ class Map
         }
 
         return $nb;
+    }
+
+    public function getVisitedPointsXY(): array
+    {
+        $visited = [];
+
+        foreach ($this->points as $key => $point) {
+            if ($point->isVisited()) {
+                $visited[] = explode('_', $key);
+            }
+        }
+
+        return $visited;
+    }
+
+    /**
+     * Pour la partie 2, je peux définir un point aléatoirement comme un obstacle
+     */
+    public function setObstacle(int $x, int $y)
+    {
+        $this->points[$x . '_' . $y]->setObstacle();
     }
 }

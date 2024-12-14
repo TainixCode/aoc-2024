@@ -31,4 +31,9 @@ class Point
     {
         return $this->isObstacle;
     }
+
+    public function setObstacle(): void
+    {
+        $this->isObstacle = true;
+    }
 }
